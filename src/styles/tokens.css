@@ -1,0 +1,55 @@
+/*
+  Design tokens. Strictly black and white: one neutral family, no accent color.
+  Light is the default (recruiters read in daylight offices); dark follows
+  the visitor's system setting or the toggle. Never pure #000 / #fff.
+*/
+:root {
+  color-scheme: light;
+
+  --bg: #f5f6f7;
+  --surface: #ffffff;
+  --hover: rgba(15, 17, 21, 0.035);
+
+  --ink: #0f1115;
+  --ink-2: #4a4f58;
+  --ink-3: #666c76;
+
+  --line: rgba(15, 17, 21, 0.12);
+  --line-strong: rgba(15, 17, 21, 0.28);
+
+  --shadow: 0 1px 0 rgba(15, 17, 21, 0.04), 0 12px 32px -14px rgba(15, 17, 21, 0.18);
+  --shadow-lift-near: rgba(15, 17, 21, 0.06);
+  --shadow-lift-far: rgba(15, 17, 21, 0.3);
+  --grain-opacity: 0.075;
+
+  --font-display: 'Bricolage Grotesque Variable', 'Geist', system-ui, sans-serif;
+  --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-serif: 'Newsreader', Georgia, serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(5rem, 10vw, 9rem);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0c0d10;
+  --surface: #14161a;
+  --hover: rgba(236, 237, 239, 0.045);
+
+  --ink: #ecedef;
+  --ink-2: #a3a8b1;
+  --ink-3: #8a909a;
+
+  --line: rgba(236, 237, 239, 0.12);
+  --line-strong: rgba(236, 237, 239, 0.3);
+
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 16px 40px -16px rgba(0, 0, 0, 0.75);
+  --shadow-lift-near: rgba(0, 0, 0, 0.4);
+  --shadow-lift-far: rgba(0, 0, 0, 0.75);
+  --grain-opacity: 0.045;
+}

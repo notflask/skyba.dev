@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Deep Obsidian Studio Surface -->
+    <linearGradient id="skybaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15191D"/>
+      <stop offset="50%" stop-color="#0B0D0E"/>
+      <stop offset="100%" stop-color="#030405"/>
+    </linearGradient>
+
+    <!-- Luxury Rim: Silver Specular to Emerald Glow -->
+    <linearGradient id="skybaBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.45)"/>
+      <stop offset="35%" stop-color="rgba(255, 255, 255, 0.15)"/>
+      <stop offset="70%" stop-color="rgba(16, 185, 129, 0.6)"/>
+      <stop offset="100%" stop-color="rgba(52, 211, 153, 0.4)"/>
+    </linearGradient>
+
+    <!-- Glyph Metal Gradient: Pure White with Soft Platinum Shadow -->
+    <linearGradient id="skybaGlyph" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E5E7EB"/>
+    </linearGradient>
+
+    <!-- Glowing Emerald Accent -->
+    <linearGradient id="skybaEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <!-- Ambient Shadow for Light Backgrounds -->
+    <filter id="skybaShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Container Squircle with Precision Border -->
+  <rect x="2" y="2" width="60" height="60" rx="15.5" fill="url(#skybaBg)" stroke="url(#skybaBorder)" stroke-width="1.6" filter="url(#skybaShadow)"/>
+  
+  <!-- Subtle Inner Specular Sheen (Sub-pixel luxury detail) -->
+  <rect x="3.6" y="3.6" width="56.8" height="56.8" rx="14" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
+
+  <!-- Architectural Swiss "S" Glyph -->
+  <path d="
+    M 44.5 22.5
+    L 37.8 22.5
+    C 37.8 18.2 34.2 15.8 28.5 15.8
+    C 21.2 15.8 16.2 19.8 16.2 25.5
+    C 16.2 30.8 20.2 33.8 26.8 35.8
+    L 32.8 37.8
+    C 41.2 40.4 45.8 44 45.8 50.5
+    C 45.8 57.5 39.5 61.5 29.8 61.5
+    C 20.5 61.5 14.5 56.8 14 49
+    L 21.2 49
+    C 21.8 53.2 25.2 55.5 29.8 55.5
+    C 35.2 55.5 38.6 52.8 38.6 48.6
+    C 38.6 43.4 34.4 40.8 27.8 38.8
+    L 21.8 36.8
+    C 14.6 34.2 9.6 30.2 9.6 24.2
+    C 9.6 16.5 16.8 11.5 28.5 11.5
+    C 39.2 11.5 44.5 16.8 44.5 22.5
+    Z
+  " fill="url(#skybaGlyph)" transform="scale(0.94) translate(1.8, 2.5)"/>
+
+  <!-- Signature Emerald Dot (skyba.) -->
+  <circle cx="49.5" cy="50.5" r="4.4" fill="url(#skybaEmerald)"/>
+  <circle cx="48.5" cy="49.5" r="1.65" fill="#D1FAE5" opacity="0.85"/>
+</svg>

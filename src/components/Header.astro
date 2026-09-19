@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import data from '../../content/landing.json';
+
+const { nav, person } = data;
+const links = [...nav, { label: 'Kontakt', href: '#kontakt' }];
+---
+
+<header>
+  <nav class="island" aria-label="Hauptnavigation">
+    <a href="/" class="rounded-xl" aria-label={`${person.name}, Startseite`}>
+      <Logo size={40} />
+    </a>
+
+    <div class="hidden md:flex items-center gap-1">
+      {nav.map((link) => (
+        <a href={`/${link.href}`} class="nav-link" data-section={link.href.slice(1)}>{link.label}</a>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button type="button" id="theme-toggle" class="icon-btn" aria-label="Zwischen hellem und dunklem Design wechseln">
+        <Icon name="moon" class="theme-icon-moon" />
+        <Icon name="sun" class="theme-icon-sun" />
+      </button>
+
+      <a href="/#kontakt" class="btn hidden md:inline-flex !py-1.5 !pr-1.5 !pl-5 !gap-3 !text-sm">
+        <span>Kontakt</span>
+        <span class="btn-chip !w-8 !h-8 !text-base"><Icon name="arrow-down" /></span>
+      </a>
+
+      <button type="button" id="menu-open" class="icon-btn md:hidden" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu-sheet">
+        <Icon name="list" />
+      </button>
+    </div>
+  </nav>
+
+  <div id="menu-sheet" class="menu-sheet" data-open="false" role="dialog" aria-modal="true" aria-label="Menü">
+    <div class="flex items-center justify-between">
+      <a href="/" aria-label={`${person.name}, Startseite`}><Logo size={36} /></a>
+      <button type="button" id="menu-close" class="icon-btn" aria-label="Menü schließen">
+        <Icon name="x" />
+      </button>
+    </div>
+    <div class="flex flex-col my-auto">
+      {links.map((link, i) => (
+        <a href={`/${link.href}`} class="menu-link" style={`--i:${i}`}>{link.label}</a>
+      ))}
+    </div>
+    <p class="eyebrow-label">{person.email}</p>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+
+  // Theme
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const dark = root.classList.toggle('dark');
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {}
+    document.querySelector('meta[name="theme-color"]:not([media])')?.setAttribute('content', dark ? '#0c0d10' : '#f5f6f7');
+  });
+
+  // Mobile menu
+  const sheet = document.getElementById('menu-sheet');
+  const openBtn = document.getElementById('menu-open');
+  const closeBtn = document.getElementById('menu-close');
+  const inertTargets = document.querySelectorAll<HTMLElement>('main, footer');
+
+  function setMenu(open: boolean) {
+    if (!sheet) return;
+    sheet.dataset.open = String(open);
+    openBtn?.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+    inertTargets.forEach((el) => (el.inert = open));
+    (open ? closeBtn : openBtn)?.focus();
+  }
+
+  openBtn?.addEventListener('click', () => setMenu(true));
+  closeBtn?.addEventListener('click', () => setMenu(false));
+  sheet?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sheet?.dataset.open === 'true') setMenu(false);
+  });
+
+  // Highlight the section currently in view
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav-link[data-section]'));
+  const targets = links
+    .map((l) => document.getElementById(l.dataset.section!))
+    .filter((el): el is HTMLElement => !!el);
+
+  if ('IntersectionObserver' in window && targets.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          links.forEach((l) => l.setAttribute('aria-current', String(l.dataset.section === entry.target.id)));
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    targets.forEach((t) => io.observe(t));
+  }
+</script>

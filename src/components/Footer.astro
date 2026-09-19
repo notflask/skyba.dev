@@ -1,0 +1,15 @@
+---
+import Logo from './Logo.astro';
+import data from '../../content/landing.json';
+
+const { person } = data;
+---
+
+<footer class="border-t border-line py-10">
+  <div class="wrap flex items-center justify-between gap-6">
+    <a href="/" class="rounded-lg" aria-label={`${person.name}, Startseite`}>
+      <Logo size={32} />
+    </a>
+    <a href="/datenschutz.html" class="footer-link u-link">Datenschutz</a>
+  </div>
+</footer>

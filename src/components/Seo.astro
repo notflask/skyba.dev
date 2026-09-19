@@ -1,0 +1,79 @@
+---
+import data from '../../content/landing.json';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  image?: string;
+  type?: string;
+  noindex?: boolean;
+}
+
+const { person } = data;
+
+const {
+  title,
+  description,
+  canonical = 'https://skyba.dev' + Astro.url.pathname.replace(/index$/, ''),
+  image = 'https://skyba.dev/og.png',
+  type = 'profile',
+  noindex = false,
+} = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://skyba.dev/#person',
+      name: person.name,
+      url: 'https://skyba.dev',
+      email: `mailto:${person.email}`,
+      jobTitle: 'Softwareentwickler',
+      description,
+      homeLocation: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          addressRegion: person.location,
+          addressCountry: 'DE',
+        },
+      },
+      sameAs: [person.github_url, person.linkedin_url].filter(Boolean),
+      knowsAbout: ['C++', 'C', 'Python', 'Linux', 'Systemprogrammierung', 'Netzwerkprogrammierung', 'IT-Sicherheit'],
+      knowsLanguage: ['de', 'en', 'uk', 'ru'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://skyba.dev/#website',
+      url: 'https://skyba.dev',
+      name: person.name,
+      inLanguage: 'de-DE',
+      publisher: { '@id': 'https://skyba.dev/#person' },
+    },
+  ],
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<meta property="og:site_name" content={person.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content={type} />
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="de_DE" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
