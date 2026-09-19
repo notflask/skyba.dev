@@ -25,7 +25,9 @@ const { title, description, canonical, noindex } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Runs before first paint: theme from stored choice or system setting (light by default). -->
+    <!-- Runs before first paint: theme from stored choice or system setting (light by default),
+         plus the graphics tier this machine earned on an earlier visit, so a weak device never
+         gets one frame of the expensive treatment before being downgraded. -->
     <script is:inline>
       (function () {
         var root = document.documentElement;
@@ -34,6 +36,9 @@ const { title, description, canonical, noindex } = Astro.props;
           var stored = localStorage.getItem('theme');
           var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
           root.classList.toggle('dark', dark);
+        } catch (e) {}
+        try {
+          if (localStorage.getItem('gfx') === 'lite') root.classList.add('lite');
         } catch (e) {}
       })();
     </script>
@@ -68,8 +73,17 @@ const { title, description, canonical, noindex } = Astro.props;
         items.forEach((el) => el.classList.add('in'));
       }
 
-      // Adaptive quality: measure real frame times once after load. If the median frame
-      // takes longer than ~24ms (under ~42 fps, e.g. weak GPU or Low Power Mode), switch to lite mode.
+      // Adaptive quality: measure real frame times once after load and remember the verdict.
+      // A median frame over ~24ms (under ~42 fps: weak GPU, Low Power Mode) drops to lite;
+      // a comfortably fast one earns full quality back, so a machine that was slow once
+      // because of a background tab is not stuck with the cheap version forever. The tilt
+      // itself keeps running either way -- lite only removes the blur, glass and grain.
+      const root = document.documentElement;
+      const tier = (value: string) => {
+        root.classList.toggle('lite', value === 'lite');
+        try { localStorage.setItem('gfx', value); } catch (e) {}
+      };
+
       window.addEventListener('load', () => {
         setTimeout(() => {
           const deltas: number[] = [];
@@ -79,7 +93,9 @@ const { title, description, canonical, noindex } = Astro.props;
             last = now;
             if (deltas.length < 40) return requestAnimationFrame(step);
             deltas.sort((a, b) => a - b);
-            if (deltas[Math.floor(deltas.length / 2)] > 24) document.documentElement.classList.add('lite');
+            const median = deltas[Math.floor(deltas.length / 2)];
+            if (median > 24) tier('lite');
+            else if (median < 18 && root.classList.contains('lite')) tier('full');
           };
           requestAnimationFrame(step);
         }, 600);

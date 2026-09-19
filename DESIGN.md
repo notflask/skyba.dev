@@ -91,7 +91,7 @@ components:
 
 A one-page CV set like a printed page: off-white paper, off-black ink, hairline rules, and type doing the work that cards and colour do elsewhere. There is no accent colour anywhere; hierarchy comes from size, weight, and three greys. Dark mode inverts the same family and is not a second palette.
 
-Density is calm and generous (large section rhythm, 62 to 68ch measures). Motion is small and single-purpose: hero rise, one hand-drawn stroke, scroll reveal, underline-on-hover, the 3D project card. All of it collapses under prefers-reduced-motion.
+Density is calm and generous (large section rhythm, 62 to 68ch measures). Motion is small and single-purpose: hero rise, one hand-drawn stroke, scroll reveal, underline-on-hover, the 3D project card. Under prefers-reduced-motion the autonomous motion collapses; the one thing that stays is the project card's tilt, at half the throw, because it is a direct answer to the cursor rather than something the page does on its own.
 
 **Key Characteristics:**
 - Strictly monochrome; light default, dark by system setting or toggle.
@@ -147,7 +147,7 @@ Single column page inside a 73.75rem wrapper with a fluid gutter (clamp 1.25rem 
 
 ## Elevation & Depth
 
-Flat by default, tonal and hairline separated. Depth appears only as a response: the project card lifts in 3D (translate -6px, tilt up to 4 degrees toward the cursor over a 1600px perspective, inner layers at 10 to 24px depth, cursor spotlight, deeper layered shadow) while the other cards blur (3px) and dim (40%), on fine pointers only; other pointers get the Surface tone with a hairline ring; the primary button gains the shadow on hover; the nav island floats with the same shadow over a blurred, 93% paper backing (opaque under reduced-transparency). Grain sits fixed over everything at 7.5% (light) and 4.5% (dark).
+Flat by default, tonal and hairline separated. Depth appears only as a response: the project card lifts in 3D (translate -6px, tilt up to 4 degrees toward the cursor over a 1600px perspective, inner layers at 10 to 24px depth, cursor spotlight, deeper layered shadow) while the other cards blur (3px) and dim (40%), on fine pointers only; under reduced motion the tilt stays at half throw, the depth layers and the sibling blur do not; other pointers get the Surface tone with a hairline ring; the primary button gains the shadow on hover; the nav island floats with the same shadow over a blurred, 93% paper backing (opaque under reduced-transparency). Grain sits fixed over everything at 7.5% (light) and 4.5% (dark).
 
 ### Shadow Vocabulary
 - **Soft Lift** (`0 1px 0 rgba(15,17,21,0.04), 0 12px 32px -14px rgba(15,17,21,0.18)`; dark uses a deeper 0.75 black variant): island, hovered row, hovered primary button.
@@ -172,7 +172,7 @@ Pills (999px) for every control: buttons, nav links, island, icon buttons, copy 
 Fixed pill island, logo only at left (no wordmark), links in Ink 2 with a 2px ink underline scaling in for the current section, theme toggle icon button. Mobile opens a full-screen paper sheet with large display links separated by hairlines, staggered in.
 
 ### Project Row (signature)
-Whole row is one link, top hairline draws in on reveal. On hover it becomes a Surface-toned card: on a fine pointer with motion allowed it lifts and tilts toward the cursor with layered depth, a soft cursor spotlight, and its siblings blur and dim; the arrow slides in. Under reduced motion or on touch there is no tilt or blur. Focus-within shows a 2px ink ring.
+Whole row is one link, top hairline draws in on reveal. On hover it becomes a Surface-toned card: on a fine pointer it lifts and tilts toward the cursor with layered depth, a soft cursor spotlight, and its siblings blur and dim; the arrow slides in. The tilt is eased in script rather than by a CSS transition -- a transitioned transform whose target moves every frame never catches up with the pointer. Under reduced motion the tilt halves and the depth layers and sibling blur drop out; on touch there is no tilt at all. Focus-within shows a 2px ink ring.
 
 ### Links
 Animated underline: strong hairline at rest, 2px ink stroke draws left to right on hover/focus over 0.5s.
@@ -187,6 +187,8 @@ The email address is set as display type with a thin underline that floods to fu
 - **Do** separate content with 1px hairlines, not boxes.
 - **Do** ease with `cubic-bezier(0.16, 1, 0.3, 1)` (fluid variant `0.32, 0.72, 0, 1` for surfaces and sheets) and provide a reduced-motion fallback for every animation.
 - **Do** inherit `currentColor` for icons and use 2px ink focus rings with 3px offset.
+- **Do** keep continuous, pointer-driven motion on composited properties only (transform, opacity) and ease it in script; anything that repaints per frame -- gradients moved by background-position, animated `filter` -- belongs to the one-shot transitions.
+- **Do** treat quality as a measured tier, not a guess: `html.lite` is set from real frame times (at load and again while a card is actually being tilted) and remembered, and it removes the repaint-heavy work -- sibling blur, layered shadow, backdrop filter, grain -- while the tilt itself keeps running.
 
 ### Don't:
 - **Don't** introduce any hue or gradient colour.

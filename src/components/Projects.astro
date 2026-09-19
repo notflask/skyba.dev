@@ -36,6 +36,7 @@ const { projects } = data;
                 </li>
               ))}
             </ul>
+            <span class="project-glow" aria-hidden="true"></span>
             <!-- Whole card is clickable. Decorative twin of the title link, hidden from keyboard and screen readers. -->
             <a class="project-hit" href={item.url} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"></a>
           </div>
@@ -46,35 +47,229 @@ const { projects } = data;
 </section>
 
 <script>
-  // Tilt toward the cursor. Only with a fine pointer and no reduced-motion preference.
-  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Cards follow the cursor.
+  //
+  // The transform lives in CSS custom properties and is never handed to a CSS
+  // transition: the easing happens here instead. A transitioned transform whose
+  // target moves every frame restarts its interpolation every frame, which is why
+  // the card used to trail far behind the pointer -- or look like it never
+  // rotated at all -- while still costing a full animation tick.
+  //
+  // One listener on the list, one animation frame loop for every card, and a
+  // frame-time watchdog that drops the page into lite mode if this machine cannot
+  // keep up. The media queries are watched live, so changing the system setting
+  // takes effect without a reload.
 
-  if (fine && !still) {
-    document.querySelectorAll<HTMLElement>('.project').forEach((row) => {
-      const card = row.querySelector<HTMLElement>('.project-card');
-      if (!card) return;
-      let frame = 0;
+  type Card = {
+    row: HTMLElement;
+    card: HTMLElement;
+    glow: HTMLElement | null;
+    rect: DOMRect | null;
+    active: boolean;
+    // current and target values: x/y rotation in deg, lift in px, scale, glow offset in px
+    rx: number; ry: number; lift: number; sc: number; gx: number; gy: number;
+    trx: number; try_: number; tlift: number; tsc: number; tgx: number; tgy: number;
+  };
 
-      row.addEventListener('pointermove', (e) => {
-        if (document.documentElement.classList.contains('lite')) return;
-        cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(() => {
-          const rect = row.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width;
-          const y = (e.clientY - rect.top) / rect.height;
-          card.style.setProperty('--ry', `${((x - 0.5) * 8).toFixed(2)}deg`);
-          card.style.setProperty('--rx', `${((0.5 - y) * 6).toFixed(2)}deg`);
-          card.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
-          card.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
-        });
-      });
+  const list = document.querySelector<HTMLElement>('.projects-list');
+  const root = document.documentElement;
 
-      row.addEventListener('pointerleave', () => {
-        cancelAnimationFrame(frame);
-        card.style.removeProperty('--rx');
-        card.style.removeProperty('--ry');
-      });
-    });
+  if (list) {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const cards: Card[] = Array.from(list.querySelectorAll<HTMLElement>('.project'))
+      .map((row) => {
+        const card = row.querySelector<HTMLElement>('.project-card');
+        if (!card) return null;
+        return {
+          row,
+          card,
+          glow: row.querySelector<HTMLElement>('.project-glow'),
+          rect: null,
+          active: false,
+          rx: 0, ry: 0, lift: 0, sc: 1, gx: 0, gy: 0,
+          trx: 0, try_: 0, tlift: 0, tsc: 1, tgx: 0, tgy: 0,
+        };
+      })
+      .filter((c): c is Card => c !== null);
+
+    let current: Card | null = null;
+    let frame = 0;
+    let last = 0;
+
+    // Reduced motion keeps the cursor tracking but halves the throw, so the card
+    // reads as responsive without swinging through the viewport.
+    const amount = () => (calm.matches ? 0.5 : 1);
+
+    const rectOf = (c: Card) => {
+      if (!c.rect) c.rect = c.row.getBoundingClientRect();
+      return c.rect;
+    };
+
+    function aim(c: Card, clientX: number, clientY: number) {
+      const rect = rectOf(c);
+      if (!rect.width || !rect.height) return;
+      const x = (clientX - rect.left) / rect.width;
+      const y = (clientY - rect.top) / rect.height;
+      const k = amount();
+      c.try_ = (x - 0.5) * 8 * k;
+      c.trx = (0.5 - y) * 6 * k;
+      c.tgx = clientX - rect.left;
+      c.tgy = clientY - rect.top;
+    }
+
+    function rest(c: Card) {
+      c.trx = 0;
+      c.try_ = 0;
+      c.tlift = 0;
+      c.tsc = 1;
+    }
+
+    function enter(c: Card) {
+      c.active = true;
+      c.tlift = -6;
+      c.tsc = 1.01;
+      c.row.classList.add('tilt', 'tilt-move');
+      // the glow starts where the pointer is instead of sliding in from the last position
+      c.gx = c.tgx;
+      c.gy = c.tgy;
+    }
+
+    function leave(c: Card) {
+      c.active = false;
+      c.row.classList.remove('tilt');
+      rest(c);
+    }
+
+    function write(c: Card) {
+      c.card.style.setProperty('--rx', c.rx.toFixed(3) + 'deg');
+      c.card.style.setProperty('--ry', c.ry.toFixed(3) + 'deg');
+      c.card.style.setProperty('--lift', c.lift.toFixed(2) + 'px');
+      c.card.style.setProperty('--sc', c.sc.toFixed(4));
+      if (c.glow) {
+        c.glow.style.setProperty('--gx', c.gx.toFixed(1) + 'px');
+        c.glow.style.setProperty('--gy', c.gy.toFixed(1) + 'px');
+      }
+    }
+
+    // Frame-time watchdog. Only samples while a card is actually moving, which is
+    // the moment that matters, and only ever decides once.
+    const samples: number[] = [];
+    let judged = false;
+
+    function judge(dt: number) {
+      if (judged || dt > 120) return; // a tab switch or a stall is not a verdict
+      samples.push(dt);
+      if (samples.length < 50) return;
+      judged = true;
+      const sorted = samples.slice().sort((a, b) => a - b);
+      if (sorted[Math.floor(sorted.length / 2)] > 22) {
+        root.classList.add('lite');
+        try { localStorage.setItem('gfx', 'lite'); } catch (e) {}
+      }
+      samples.length = 0;
+    }
+
+    function tick(now: number) {
+      const dt = last ? Math.min(now - last, 64) : 16.7;
+      last = now;
+
+      // frame-rate independent easing: the same visual speed at 60, 120 or 30 fps
+      const k = 1 - Math.pow(1 - 0.24, dt / 16.7);
+      let busy = false;
+      let moving = false;
+
+      for (const c of cards) {
+        const drx = c.trx - c.rx;
+        const dry = c.try_ - c.ry;
+        const dl = c.tlift - c.lift;
+        const ds = c.tsc - c.sc;
+        const dgx = c.tgx - c.gx;
+        const dgy = c.tgy - c.gy;
+
+        const settled =
+          Math.abs(drx) < 0.01 && Math.abs(dry) < 0.01 &&
+          Math.abs(dl) < 0.02 && Math.abs(ds) < 0.0005 &&
+          (!c.active || (Math.abs(dgx) < 0.5 && Math.abs(dgy) < 0.5));
+
+        if (settled) {
+          if (c.active) continue;
+          // snap the last fraction away and stop touching this card entirely
+          if (c.rx !== 0 || c.ry !== 0 || c.lift !== 0 || c.sc !== 1) {
+            c.rx = c.trx; c.ry = c.try_; c.lift = c.tlift; c.sc = c.tsc;
+            write(c);
+            c.row.classList.remove('tilt-move');
+          }
+          continue;
+        }
+
+        c.rx += drx * k;
+        c.ry += dry * k;
+        c.lift += dl * k;
+        c.sc += ds * k;
+        c.gx += dgx * k;
+        c.gy += dgy * k;
+        write(c);
+
+        busy = true;
+        if (Math.abs(drx) > 0.05 || Math.abs(dry) > 0.05) moving = true;
+      }
+
+      if (moving) judge(dt);
+
+      if (busy || current) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        frame = 0;
+        last = 0;
+      }
+    }
+
+    function run() {
+      if (!frame) {
+        last = 0;
+        frame = requestAnimationFrame(tick);
+      }
+    }
+
+    function onMove(e: PointerEvent) {
+      if (!fine.matches) return;
+      const row = (e.target as Element | null)?.closest<HTMLElement>('.project') ?? null;
+      const next = row ? cards.find((c) => c.row === row) ?? null : null;
+
+      if (next !== current) {
+        if (current) leave(current);
+        current = next;
+        if (next) {
+          aim(next, e.clientX, e.clientY);
+          enter(next);
+        }
+        list!.classList.toggle('dim', next !== null);
+      } else if (next) {
+        aim(next, e.clientX, e.clientY);
+      }
+      run();
+    }
+
+    function onLeave() {
+      if (current) leave(current);
+      current = null;
+      list!.classList.remove('dim');
+      run();
+    }
+
+    list.addEventListener('pointermove', onMove, { passive: true });
+    list.addEventListener('pointerleave', onLeave, { passive: true });
+    // a click that opens a new tab, or a scroll that moves the card out, both end the hover
+    window.addEventListener('blur', onLeave);
+
+    // Rects are cached so the hot path never forces a layout; scrolling or a
+    // resize is the only thing that can move a card under a still cursor.
+    const invalidate = () => { for (const c of cards) c.rect = null; };
+    window.addEventListener('scroll', invalidate, { passive: true });
+    window.addEventListener('resize', invalidate, { passive: true });
+
+    fine.addEventListener('change', onLeave);
   }
 </script>

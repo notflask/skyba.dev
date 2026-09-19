@@ -411,7 +411,14 @@
 
 .js .project:not(.in)::before { transform: scaleX(0); }
 
+/* The transform is driven entirely from script through these variables and is
+   deliberately never transitioned: the script eases the values itself, so the
+   card cannot end up chasing a half-finished CSS transition every frame. */
 .project-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --lift: 0px;
+  --sc: 1;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -419,41 +426,60 @@
   padding: 2rem var(--card-x);
   border-radius: 1.1rem;
   transform-style: preserve-3d;
+  transform: translateY(var(--lift)) scale(var(--sc)) rotateX(var(--rx)) rotateY(var(--ry));
   transition:
-    transform 0.7s var(--ease-out),
     background-color 0.35s var(--ease-fluid),
-    box-shadow 0.6s var(--ease-out),
-    filter 0.5s var(--ease-fluid),
-    opacity 0.5s var(--ease-fluid);
+    box-shadow 0.5s var(--ease-out),
+    filter 0.4s var(--ease-fluid),
+    opacity 0.4s var(--ease-fluid);
 }
 
-/* cursor spotlight: sits behind the text layers */
-.project-card::after {
-  content: '';
+/* Cursor spotlight. A fixed-size circle moved with a transform, so following the
+   pointer only recomposites the layer instead of repainting a gradient per frame. */
+.project-glow {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border-radius: inherit;
+  overflow: hidden;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(
-    520px circle at var(--mx, 50%) var(--my, 50%),
-    color-mix(in srgb, var(--ink) 7%, transparent),
-    transparent 65%
-  );
-  transition: opacity 0.4s;
+  transition: opacity 0.35s var(--ease-fluid);
 }
 
+.project-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  margin: -260px 0 0 -260px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side circle,
+    color-mix(in srgb, var(--ink) 9%, transparent),
+    transparent 70%
+  );
+  transform: translate3d(var(--gx, 0px), var(--gy, 0px), 0);
+}
+
+/* In a preserve-3d card, z-index alone does not beat a sibling that was pushed
+   toward the viewer -- the overlay has to sit in front of the deepest text layer
+   or clicks on the card body would land on the text block instead. */
 .project-hit {
   position: absolute;
   inset: 0;
   z-index: 2;
   border-radius: inherit;
-  transform: translateZ(60px);
+  transform: translateZ(30px);
 }
 
 .project-head,
 .project-desc,
 .project-stack {
+  position: relative;
+  z-index: 1;
   transition: transform 0.6s var(--ease-out);
 }
 
@@ -525,54 +551,60 @@
   .project:hover .project-arrow { transform: none; opacity: 1; }
   .project:hover .project-card {
     background: var(--surface);
-    box-shadow: 0 0 0 1px var(--line-strong);
+    box-shadow: 0 0 0 1px var(--line-strong), var(--shadow);
   }
-  .project:hover .project-card::after { opacity: 1; }
+  .project:hover .project-glow { opacity: 1; }
 }
 
-/* Fine pointer, motion allowed: the card lifts in 3D, follows the cursor,
-   inner layers sit at different depths, the other cards blur and dim. */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .project:hover .project-card {
-    transform: translateY(-6px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.01);
-    box-shadow:
-      0 0 0 1px var(--line-strong),
-      0 2px 4px var(--shadow-lift-near),
-      0 28px 56px -18px var(--shadow-lift-far),
-      0 64px 96px -44px var(--shadow-lift-far);
-    transition:
-      transform 0.28s var(--ease-out),
-      background-color 0.35s var(--ease-fluid),
-      box-shadow 0.5s var(--ease-out),
-      filter 0.5s var(--ease-fluid),
-      opacity 0.5s var(--ease-fluid);
-  }
-  .project:hover .project-head { transform: translateZ(24px); }
-  .project:hover .project-desc { transform: translateZ(10px); }
-  .project:hover .project-stack { transform: translateZ(18px); }
+/* The script marks the row it is currently tracking. Everything below only ever
+   applies while a fine pointer is actually over a card, so a touch device, a
+   keyboard user or a browser without script never pays for any of it. */
+.project.tilt .project-card {
+  box-shadow:
+    0 0 0 1px var(--line-strong),
+    0 2px 4px var(--shadow-lift-near),
+    0 28px 56px -18px var(--shadow-lift-far),
+    0 64px 96px -44px var(--shadow-lift-far);
+}
 
-  .projects-list:has(.project:hover) .project:not(:hover) .project-card {
+.project.tilt-move .project-card { will-change: transform; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .project.tilt .project-head { transform: translateZ(24px); }
+  .project.tilt .project-desc { transform: translateZ(10px); }
+  .project.tilt .project-stack { transform: translateZ(18px); }
+
+  .projects-list.dim .project:not(.tilt) .project-card {
     filter: blur(3px);
     opacity: 0.4;
   }
 }
 
-/* Lite mode: set by a small frame-rate probe on weak devices or Low Power Mode.
-   No blur, no tilt, no glass, no grain; cards still lift onto a surface. */
+@media (prefers-reduced-motion: reduce) {
+  .projects-list.dim .project:not(.tilt) .project-card { opacity: 0.5; }
+}
+
+/* Lite mode: weak GPU, Low Power Mode, or a frame budget we measured being
+   missed at runtime. The tilt survives -- it is a composited transform and costs
+   almost nothing. What goes is everything that forces a repaint: the sibling
+   blur, the layered shadow, the backdrop filter and the grain overlay. */
 .lite .grain { display: none; }
+
 .lite .island {
   background: var(--bg);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-.lite .project:hover .project-card {
-  transform: none;
+
+.lite .project.tilt .project-card {
   box-shadow: 0 0 0 1px var(--line-strong), var(--shadow);
 }
-.lite .project:hover .project-head,
-.lite .project:hover .project-desc,
-.lite .project:hover .project-stack { transform: none; }
-.lite .projects-list:has(.project:hover) .project:not(:hover) .project-card {
+
+.lite .project.tilt .project-head,
+.lite .project.tilt .project-desc,
+.lite .project.tilt .project-stack { transform: none; }
+
+.lite .projects-list.dim .project:not(.tilt) .project-card {
   filter: none;
   opacity: 0.55;
 }
