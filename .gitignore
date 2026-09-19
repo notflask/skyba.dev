@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.env
+.env.*
+.DS_Store
+*.log
+
+# local tooling output
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/hook.cache.json
+.impeccable/config.local.json
