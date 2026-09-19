@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-19T00:00:00Z",
+  "title": "Design System: skyba.dev",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#f5f6f7", "tonalRamp": ["#0f1115", "#2b2f36", "#4a4f58", "#666c76", "#9aa0a9", "#c9cdd3", "#e6e8ea", "#f5f6f7"] },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "#ffffff", "tonalRamp": ["#0f1115", "#2b2f36", "#4a4f58", "#666c76", "#9aa0a9", "#c9cdd3", "#e6e8ea", "#ffffff"] },
+      "ink": { "role": "primary", "displayName": "Ink", "canonical": "#0f1115", "tonalRamp": ["#0f1115", "#1d2026", "#2b2f36", "#3a3e46", "#4a4f58", "#666c76", "#8a909a", "#a3a8b1"] },
+      "ink-2": { "role": "neutral", "displayName": "Ink 2", "canonical": "#4a4f58", "tonalRamp": ["#0f1115", "#1d2026", "#2f333a", "#4a4f58", "#666c76", "#8a909a", "#a3a8b1", "#ecedef"] },
+      "ink-3": { "role": "neutral", "displayName": "Ink 3", "canonical": "#666c76", "tonalRamp": ["#0f1115", "#2b2f36", "#4a4f58", "#666c76", "#8a909a", "#a3a8b1", "#c9cdd3", "#ecedef"] },
+      "night": { "role": "neutral", "displayName": "Night (dark paper)", "canonical": "#0c0d10", "tonalRamp": ["#0c0d10", "#14161a", "#22252b", "#4a4f58", "#666c76", "#8a909a", "#a3a8b1", "#ecedef"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name on one line." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings." },
+      "title": { "displayName": "Title", "purpose": "Project names." },
+      "statement": { "displayName": "Statement", "purpose": "Single Newsreader italic line." },
+      "body": { "displayName": "Body", "purpose": "Prose in Ink 2." },
+      "label": { "displayName": "Label", "purpose": "Mono data and column heads." }
+    },
+    "shadows": [
+      { "name": "soft-lift", "value": "0 1px 0 rgba(15,17,21,0.04), 0 12px 32px -14px rgba(15,17,21,0.18)", "purpose": "Island, hovered project row, hovered primary button. Dark: 0 1px 0 rgba(255,255,255,0.04), 0 16px 40px -16px rgba(0,0,0,0.75)." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveals, underline draw, lifts, stroke draw." },
+      { "name": "ease-fluid", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Row background and menu sheet." }
+    ],
+    "breakpoints": [
+      { "name": "project-grid", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink pill with inverted arrow chip.",
+      "html": "<a class=\"ds-btn\">Projekte ansehen <span class=\"ds-chip\">&rarr;</span></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;gap:1rem;padding:.5rem .5rem .5rem 1.5rem;border-radius:999px;background:var(--ink,#0f1115);color:var(--bg,#f5f6f7);font-weight:500;font-size:.95rem;line-height:1;transition:transform .3s,box-shadow .3s}.ds-btn:hover{box-shadow:0 1px 0 rgba(15,17,21,.04),0 12px 32px -14px rgba(15,17,21,.18)}.ds-btn:active{transform:scale(.98)}.ds-btn:focus-visible{outline:2px solid var(--ink,#0f1115);outline-offset:3px}.ds-chip{display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:999px;background:var(--bg,#f5f6f7);color:var(--ink,#0f1115);transition:transform .4s}.ds-btn:hover .ds-chip{transform:scale(1.1)}"
+    },
+    {
+      "name": "Copy Button",
+      "kind": "button",
+      "refersTo": "button-copy",
+      "description": "Outlined pill for secondary actions.",
+      "html": "<button class=\"ds-copy\">E-Mail kopieren</button>",
+      "css": ".ds-copy{padding:.55rem 1rem;border-radius:999px;border:1px solid rgba(15,17,21,.28);background:transparent;font-size:.9rem;font-weight:500;color:var(--ink,#0f1115);transition:background-color .2s,transform .3s}.ds-copy:hover{background:rgba(15,17,21,.035)}.ds-copy:active{transform:scale(.97)}.ds-copy:focus-visible{outline:2px solid var(--ink,#0f1115);outline-offset:3px}"
+    },
+    {
+      "name": "Nav Island",
+      "kind": "nav",
+      "refersTo": "nav-island",
+      "description": "Floating blurred pill with logo and links.",
+      "html": "<nav class=\"ds-island\"><b>S</b><a class=\"ds-nav\" aria-current=\"true\">Projekte</a><a class=\"ds-nav\">Kontakt</a></nav>",
+      "css": ".ds-island{display:flex;align-items:center;gap:1rem;padding:.5rem .5rem .5rem .9rem;border-radius:999px;background:color-mix(in srgb,var(--bg,#f5f6f7) 82%,transparent);border:1px solid rgba(15,17,21,.12);backdrop-filter:blur(16px) saturate(140%)}.ds-nav{position:relative;padding:.55rem .9rem;border-radius:999px;font-size:.925rem;font-weight:500;color:var(--ink-2,#4a4f58);transition:color .2s,background-color .2s}.ds-nav:hover{color:var(--ink,#0f1115);background:rgba(15,17,21,.035)}.ds-nav[aria-current=true]{color:var(--ink,#0f1115);box-shadow:inset 0 -2px 0 -0px var(--ink,#0f1115)}.ds-nav:focus-visible{outline:2px solid var(--ink,#0f1115);outline-offset:3px}"
+    },
+    {
+      "name": "Project Row",
+      "kind": "card",
+      "refersTo": "project-row-hover",
+      "description": "Hairline-topped row that lifts into a soft surface on hover.",
+      "html": "<article class=\"ds-project\"><h3>Project name</h3><p>Description</p></article>",
+      "css": ".ds-project{position:relative;padding:2rem .75rem;border-radius:1rem;border-top:1px solid rgba(15,17,21,.12);transition:background-color .35s,box-shadow .5s,translate .5s}.ds-project:hover{background:var(--surface,#fff);border-top-color:transparent;box-shadow:0 0 0 1px rgba(15,17,21,.12),0 12px 32px -14px rgba(15,17,21,.18);translate:0 -3px}.ds-project h3{font-weight:650;letter-spacing:-.03em;font-size:1.75rem;line-height:1.05}.ds-project p{color:var(--ink-2,#4a4f58)}"
+    },
+    {
+      "name": "Underline Link",
+      "kind": "custom",
+      "description": "Hairline at rest, 2px ink stroke draws in on hover.",
+      "html": "<a class=\"ds-u\">GitHub-Profil</a>",
+      "css": ".ds-u{background-image:linear-gradient(rgba(15,17,21,.28),rgba(15,17,21,.28)),linear-gradient(#0f1115,#0f1115);background-repeat:no-repeat;background-position:0 100%,0 100%;background-size:100% 1px,0% 2px;padding-bottom:.18em;transition:background-size .5s cubic-bezier(.16,1,.3,1)}.ds-u:hover,.ds-u:focus-visible{background-size:100% 1px,100% 2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Typeset Page",
+    "overview": "A one-page CV set like a printed page: off-white paper, off-black ink, hairline rules, and type doing the work that cards and colour do elsewhere. There is no accent colour anywhere; hierarchy comes from size, weight, and three greys. Dark mode inverts the same family and is not a second palette.",
+    "keyCharacteristics": [
+      "Strictly monochrome; light default, dark by system setting or toggle.",
+      "Hairlines instead of cards; the only surface is the hovered project row.",
+      "Pill geometry for interactive controls, generous radius on the portrait and rows.",
+      "Visible film grain in both themes.",
+      "Monochrome brand marks and glyph icons inherit currentColor."
+    ],
+    "rules": [
+      { "name": "The No Accent Rule", "body": "No hue exists in the system. Emphasis is inversion, weight, or underline.", "section": "colors" },
+      { "name": "The Never Pure Rule", "body": "Page and text colours are the tinted off-values, never #000 or #fff as page or text.", "section": "colors" },
+      { "name": "The Mono Is Data Rule", "body": "Geist Mono carries facts and tech names only, never decorative captions.", "section": "typography" },
+      { "name": "The One Serif Rule", "body": "Newsreader italic is the single statement line; it is not a second heading face.", "section": "typography" },
+      { "name": "The Response Only Rule", "body": "Rest state is flat; shadow marks hover or floating chrome, never static content.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use only the ink/paper family and its three greys; express emphasis by inversion, weight, or underline.",
+      "Do separate content with 1px hairlines, not boxes.",
+      "Do ease with cubic-bezier(0.16, 1, 0.3, 1) (fluid variant 0.32, 0.72, 0, 1 for surfaces and sheets) and provide a reduced-motion fallback for every animation.",
+      "Do inherit currentColor for icons and use 2px ink focus rings with 3px offset."
+    ],
+    "donts": [
+      "Don't introduce any hue or gradient colour.",
+      "Don't add nested cards, pills used as labels, or numbered sections.",
+      "Don't put a wordmark in the navbar or footer; logo only.",
+      "Don't use hard offset shadows; shadow is the soft lift only."
+    ]
+  }
+}
