@@ -1,0 +1,79 @@
+---
+// Monochrome marks: Simple Icons for real technologies, Phosphor for concepts.
+// Both draw in currentColor, so they follow the black-and-white theme.
+import {
+  siAnsible,
+  siArchlinux,
+  siC,
+  siCmake,
+  siCplusplus,
+  siDocker,
+  siGit,
+  siGnubash,
+  siJavascript,
+  siLatex,
+  siLinux,
+  siMake,
+  siNeovim,
+  siPython,
+  siRust,
+  siUbuntu,
+  siVagrant,
+} from 'simple-icons';
+import plugs from '@phosphor-icons/core/assets/regular/plugs-connected.svg?raw';
+import tree from '@phosphor-icons/core/assets/regular/tree-structure.svg?raw';
+import chart from '@phosphor-icons/core/assets/regular/chart-line-up.svg?raw';
+import sigma from '@phosphor-icons/core/assets/regular/sigma.svg?raw';
+import terminal from '@phosphor-icons/core/assets/regular/terminal-window.svg?raw';
+import checkSquare from '@phosphor-icons/core/assets/regular/check-square.svg?raw';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = '' } = Astro.props;
+const n = name.toLowerCase();
+
+const brand = (icon: { path: string; title: string }) => ({ kind: 'brand' as const, path: icon.path });
+const glyph = (svg: string) => ({ kind: 'glyph' as const, svg });
+
+// Order matters: concept rules come before brand rules.
+const rules: Array<[RegExp, ReturnType<typeof brand> | ReturnType<typeof glyph>]> = [
+  [/socket/, glyph(plugs)],
+  [/algorithm/, glyph(tree)],
+  [/komplexit/, glyph(chart)],
+  [/mathemat/, glyph(sigma)],
+  [/googletest/, glyph(checkSquare)],
+  [/pwntools/, glyph(terminal)],
+  [/c\+\+/, brand(siCplusplus)],
+  [/^c$/, brand(siC)],
+  [/cmake/, brand(siCmake)],
+  [/^make$/, brand(siMake)],
+  [/python/, brand(siPython)],
+  [/bash/, brand(siGnubash)],
+  [/rust/, brand(siRust)],
+  [/javascript/, brand(siJavascript)],
+  [/linux/, brand(siLinux)],
+  [/ubuntu/, brand(siUbuntu)],
+  [/arch/, brand(siArchlinux)],
+  [/git/, brand(siGit)],
+  [/docker/, brand(siDocker)],
+  [/neovim/, brand(siNeovim)],
+  [/latex/, brand(siLatex)],
+  [/ansible/, brand(siAnsible)],
+  [/vagrant/, brand(siVagrant)],
+];
+
+const match = rules.find(([re]) => re.test(n))?.[1];
+---
+
+{
+  match?.kind === 'brand' && (
+    <svg class={`tech-icon ${className}`.trim()} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d={match.path} />
+    </svg>
+  )
+}
+{match?.kind === 'glyph' && <span class={`tech-icon icon ${className}`.trim()} aria-hidden="true" set:html={match.svg} />}
+{!match && <span class={`tech-icon ${className}`.trim()} aria-hidden="true" />}

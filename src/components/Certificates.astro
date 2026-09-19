@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+import data from '../../content/landing.json';
+
+const { certificates } = data;
+---
+
+<section id="zertifikate" class="section border-t border-line">
+  <div class="wrap">
+    <div class="max-w-2xl reveal">
+      <h2 class="h-section">{certificates.heading}</h2>
+      <p class="mt-6 text-ink-2 max-w-[52ch]">{certificates.intro}</p>
+    </div>
+
+    <div class="mt-14 md:mt-20 grid gap-x-12 gap-y-14 md:grid-cols-2">
+      {certificates.items.map((item, i) => (
+        <a class="cert reveal" style={`--i:${i}`} href={item.url} target="_blank" rel="noopener noreferrer">
+          <img class="cert-badge" src={item.image} alt={item.alt} width="120" height="120" loading="lazy" decoding="async" />
+          <div>
+            <h3 class="cert-title">{item.title}</h3>
+            <p class="cert-meta">{item.issuer}, {item.date}</p>
+            <p class="cert-desc">{item.description}</p>
+            <span class="btn-quiet u-link mt-5">
+              <span>{certificates.link_label}</span>
+              <Icon name="arrow-up-right" />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

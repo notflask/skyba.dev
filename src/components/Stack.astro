@@ -1,0 +1,29 @@
+---
+import TechIcon from './TechIcon.astro';
+import data from '../../content/landing.json';
+
+const { stack } = data;
+---
+
+<section id="technik" class="section border-t border-line">
+  <div class="wrap">
+    <h2 class="h-section reveal">{stack.heading}</h2>
+
+    <div class="mt-12 md:mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {stack.groups.map((group, i) => (
+        <div class="stack-col reveal" style={`--i:${i}`}>
+          <h3>{group.title}</h3>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <TechIcon name={item} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          {group.note && <p class="note">{group.note}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

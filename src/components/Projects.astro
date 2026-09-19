@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import TechIcon from './TechIcon.astro';
+import data from '../../content/landing.json';
+
+const { projects } = data;
+---
+
+<section id="projekte" class="section border-t border-line">
+  <div class="wrap">
+    <div class="max-w-2xl reveal">
+      <h2 class="h-section">{projects.heading}</h2>
+      <p class="mt-6 text-ink-2 max-w-[52ch]">{projects.intro}</p>
+    </div>
+
+    <div class="projects-list mt-14 md:mt-20">
+      {projects.items.map((item) => (
+        <article class="project reveal">
+          <div class="project-card">
+            <div class="project-head">
+              <h3 class="project-name">
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.name}
+                  <span class="sr-only">, {projects.link_label}</span>
+                  <Icon name="arrow-up-right" class="project-arrow ml-1 inline-block align-baseline text-[0.7em]" />
+                </a>
+              </h3>
+              <p class="project-kind">{item.kind}</p>
+            </div>
+            <p class="project-desc">{item.description}</p>
+            <ul class="project-stack" aria-label="Technologien">
+              {item.stack.map((tech) => (
+                <li>
+                  <TechIcon name={tech} />
+                  <span>{tech}</span>
+                </li>
+              ))}
+            </ul>
+            <!-- Whole card is clickable. Decorative twin of the title link, hidden from keyboard and screen readers. -->
+            <a class="project-hit" href={item.url} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Tilt toward the cursor. Only with a fine pointer and no reduced-motion preference.
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (fine && !still) {
+    document.querySelectorAll<HTMLElement>('.project').forEach((row) => {
+      const card = row.querySelector<HTMLElement>('.project-card');
+      if (!card) return;
+      let frame = 0;
+
+      row.addEventListener('pointermove', (e) => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const rect = row.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          card.style.setProperty('--ry', `${((x - 0.5) * 8).toFixed(2)}deg`);
+          card.style.setProperty('--rx', `${((0.5 - y) * 6).toFixed(2)}deg`);
+          card.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+          card.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+        });
+      });
+
+      row.addEventListener('pointerleave', () => {
+        cancelAnimationFrame(frame);
+        card.style.removeProperty('--rx');
+        card.style.removeProperty('--ry');
+      });
+    });
+  }
+</script>

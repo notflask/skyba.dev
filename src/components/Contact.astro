@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+import data from '../../content/landing.json';
+
+const { contact, person } = data;
+const subject = encodeURIComponent('Kontakt über skyba.dev');
+---
+
+<section id="kontakt" class="section border-t border-line">
+  <div class="wrap">
+    <h2 class="h-section reveal">{contact.heading}</h2>
+    <p class="mt-6 text-ink-2 max-w-[48ch] reveal">{contact.text}</p>
+
+    <div class="mt-12 md:mt-16 reveal">
+      <a class="mail-link" href={`mailto:${person.email}?subject=${subject}`}>{person.email}</a>
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 reveal">
+      <button type="button" class="copy-btn" data-copy={person.email} data-copied={contact.copied_label}>
+        <Icon name="copy" class="copy-icon" />
+        <span data-label aria-live="polite">{contact.copy_label}</span>
+      </button>
+      {person.linkedin_url && (
+        <a href={person.linkedin_url} class="btn-quiet u-link" target="_blank" rel="noopener noreferrer">
+          <span>LinkedIn</span>
+          <Icon name="arrow-up-right" />
+        </a>
+      )}
+      {person.cv_url && (
+        <a href={person.cv_url} class="btn-quiet u-link" download>
+          <span>Lebenslauf (PDF)</span>
+          <Icon name="file" />
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const label = btn.querySelector<HTMLElement>('[data-label]');
+    const idle = label?.textContent ?? '';
+    let timer: number | undefined;
+
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+      } catch {
+        return;
+      }
+      btn.dataset.done = 'true';
+      if (label) label.textContent = btn.dataset.copied ?? 'Kopiert';
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        btn.dataset.done = 'false';
+        if (label) label.textContent = idle;
+      }, 2000);
+    });
+  });
+</script>

@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import data from '../../content/landing.json';
+
+const { hero, person } = data;
+const [first, ...rest] = person.name.split(' ');
+const last = rest.join(' ');
+---
+
+<section class="relative min-h-[100dvh] flex items-center pt-28 md:pt-24 pb-14 md:pb-20">
+  <div class="wrap">
+    <div class="grid gap-y-14 lg:grid-cols-12 lg:gap-x-10 items-end">
+      <div class="lg:col-span-8">
+        <h1 class="hero-name">
+          <span class="line rise" style="--d:80">{first}</span>{' '}
+          <span class="line rise" style="--d:200">
+            <span class="signed">
+              {last}
+              <svg class="signed-line" viewBox="0 0 300 26" fill="none" aria-hidden="true">
+                <path pathLength="1" d="M4 17C52 7 96 22 150 13C198 5 246 19 296 9"></path>
+              </svg>
+            </span>
+          </span>
+        </h1>
+
+        <p class="lead rise mt-12 md:mt-14" style="--d:380">{hero.lead}</p>
+
+        <div class="rise mt-10 flex flex-wrap items-center gap-x-8 gap-y-5" style="--d:520">
+          <a href="#projekte" class="btn">
+            <span>{hero.cta_primary}</span>
+            <span class="btn-chip"><Icon name="arrow-down" /></span>
+          </a>
+          <a href={person.github_url} class="btn-quiet u-link" target="_blank" rel="noopener noreferrer">
+            <span>{hero.cta_secondary}</span>
+            <Icon name="arrow-up-right" />
+          </a>
+        </div>
+      </div>
+
+      <div class="rise lg:col-span-4" style="--d:640">
+        {person.photo && (
+          <img class="portrait mb-8" src={person.photo} alt={`Porträt von ${person.name}`} width="640" height="800" fetchpriority="high" />
+        )}
+        <dl class="facts">
+          {hero.facts.map((fact) => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

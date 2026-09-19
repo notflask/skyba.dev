@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "title": "Danilo Skyba | Duales Studium Informatik, C++ und Linux",
+    "description": "Danilo Skyba programmiert seit dem 9. Lebensjahr in C++ und C unter Linux und sucht ein Duales Studium in der Informatik. Projekte, Technik und Kontakt."
+  },
+  "person": {
+    "name": "Danilo Skyba",
+    "email": "danilo@skyba.dev",
+    "github_url": "https://github.com/notflask",
+    "github_handle": "notflask",
+    "linkedin_url": "https://www.linkedin.com/in/danilo-skyba-12a74a401/",
+    "location": "Schleswig-Holstein",
+    "cv_url": null,
+    "photo": null
+  },
+  "nav": [
+    {
+      "label": "Über mich",
+      "href": "#ueber-mich"
+    },
+    {
+      "label": "Projekte",
+      "href": "#projekte"
+    },
+    {
+      "label": "Zertifikate",
+      "href": "#zertifikate"
+    },
+    {
+      "label": "Technik",
+      "href": "#technik"
+    }
+  ],
+  "hero": {
+    "lead": "Ich programmiere seit meinem neunten Lebensjahr und suche ein Unternehmen für ein Duales Studium in der Informatik.",
+    "facts": [
+      {
+        "label": "Beginn",
+        "value": "Wintersemester 2027"
+      },
+      {
+        "label": "Hochschulzugang",
+        "value": "Studienkolleg mit Feststellungsprüfung (FSP)"
+      },
+      {
+        "label": "Schwerpunkt",
+        "value": "Systemnahe Entwicklung in C++, C und Linux"
+      },
+      {
+        "label": "Sprachen",
+        "value": "Deutsch (B2, C1 nach der FSP), Englisch (B2-C1), Ukrainisch und Russisch (Muttersprache)"
+      },
+      {
+        "label": "Standort",
+        "value": "Schleswig-Holstein"
+      }
+    ],
+    "cta_primary": "Projekte ansehen",
+    "cta_secondary": "GitHub-Profil"
+  },
+  "about": {
+    "heading": "Über mich",
+    "statement": "Ich möchte verstehen, wie Software auf Systemebene funktioniert.",
+    "paragraphs": [
+      "Mit neun habe ich meine ersten Skripte geschrieben, zuerst in Python, später in C und C++. Geblieben ist die Neugier auf das, was unter der Haube passiert: wie Speicher verwaltet wird, wie ein Socket Netzwerkpakete verarbeitet und wie man einen Server absichert.",
+      "Meine Projekte entstehen aus dieser Neugier: eine eigene Key-Value-Datenbank, ein HTTP-Server, Härtungsskripte für Linux. Was mir noch fehlt, ist die theoretische Tiefe, an der ich gerade selbst arbeite. In einem Dualen Studium möchte ich sie systematisch lernen und im Betrieb direkt anwenden."
+    ]
+  },
+  "projects": {
+    "heading": "Projekte",
+    "intro": "Alle Projekte sind öffentlich auf GitHub, samt Quellcode.",
+    "link_label": "Quellcode auf GitHub",
+    "items": [
+      {
+        "name": "grapedb",
+        "kind": "Key-Value-Datenbank in C++",
+        "description": "Ein Lernprojekt, um Datenbank-Interna zu verstehen. Die Daten liegen in einem Append-only-Log, das automatisch kompaktiert wird. Nach einem Absturz stellt grapedb den Zustand wieder her, ein Index im Arbeitsspeicher beschleunigt Lookups, Mutexe machen den Zugriff thread-sicher.",
+        "stack": [
+          "C++17/23",
+          "CMake",
+          "GoogleTest"
+        ],
+        "url": "https://github.com/notflask/grapedb"
+      },
+      {
+        "name": "chizik",
+        "kind": "HTTP-Server-Bibliothek in C++",
+        "description": "Von Grund auf auf POSIX-Sockets gebaut, ohne externe Abhängigkeiten. Sie bietet Routing für GET und POST, Wildcard-Routen, eigene 404-Handler und statische Dateien mit automatischem Content-Type samt Schutz vor Path Traversal.",
+        "stack": [
+          "C++20",
+          "POSIX-Sockets",
+          "CMake",
+          "GoogleTest"
+        ],
+        "url": "https://github.com/notflask/chizik"
+      },
+      {
+        "name": "server-hardening-lab",
+        "kind": "Linux-Server absichern",
+        "description": "Skripte und Konfigurationen für einen gehärteten Ubuntu-Server: SSH mit Schlüsseln, UFW-Firewall, Fail2Ban, Auditd und Lynis-Audits. Ein Ansible-Playbook und ein Vagrantfile machen das Setup reproduzierbar.",
+        "stack": [
+          "Bash",
+          "Ansible",
+          "Vagrant"
+        ],
+        "url": "https://github.com/notflask/server-hardening-lab"
+      },
+      {
+        "name": "beginners-quest",
+        "kind": "Google CTF 2024, Beginner's Quest",
+        "description": "Meine Lösungen für Aufgaben des Wettbewerbs: ein bcrypt-Brute-Force, ein Format-String-Exploit mit pwntools und ein Skript für eine Refund-Schwachstelle.",
+        "stack": [
+          "Python",
+          "JavaScript",
+          "pwntools"
+        ],
+        "url": "https://github.com/notflask/beginners-quest"
+      },
+      {
+        "name": "pomodoro",
+        "kind": "Pomodoro-Timer fürs Terminal",
+        "description": "Ein kleines Unix-Tool in C. Ein Daemon läuft im Hintergrund und wird per start, stop, show und reset gesteuert.",
+        "stack": [
+          "C",
+          "Make"
+        ],
+        "url": "https://github.com/notflask/pomodoro"
+      }
+    ]
+  },
+  "certificates": {
+    "heading": "Zertifikate",
+    "intro": "Beide Nachweise sind öffentlich bei Credly verifizierbar.",
+    "link_label": "Bei Credly prüfen",
+    "items": [
+      {
+        "title": "PCEP: Certified Entry-Level Python Programmer",
+        "issuer": "Python Institute",
+        "date": "April 2023",
+        "description": "Zertifizierungsprüfung zu den Grundlagen der Programmierung mit Python 3: Syntax und Semantik der Sprache, Algorithmen und einfache Programmieraufgaben.",
+        "url": "https://www.credly.com/badges/568c5a2e-e0ee-4a23-ac16-b6cd29bdaf30/public_url",
+        "image": "/badges/pcep.png",
+        "alt": "Credly-Badge: PCEP, Certified Entry-Level Python Programmer"
+      },
+      {
+        "title": "Introduction to Cybersecurity",
+        "issuer": "Cisco Networking Academy",
+        "date": "November 2022",
+        "description": "Grundlagen der IT-Sicherheit: Bedrohungserkennung, Schwachstellen in Netzwerken, Datenschutz und Vertraulichkeit. Bestanden mit der Abschlussprüfung der Cisco Networking Academy.",
+        "url": "https://www.credly.com/badges/d2a70ab2-9566-4e66-b91a-0840eeb4e473/public_url",
+        "image": "/badges/cisco.png",
+        "alt": "Credly-Badge: Cisco Networking Academy, Introduction to Cybersecurity"
+      }
+    ]
+  },
+  "stack": {
+    "heading": "Technik",
+    "groups": [
+      {
+        "title": "Programmiersprachen",
+        "items": [
+          "C++ (ab C++17)",
+          "C",
+          "Python",
+          "Bash"
+        ],
+        "note": "Grundkenntnisse in Java und Rust"
+      },
+      {
+        "title": "Umgebung",
+        "items": [
+          "Linux (Ubuntu, Arch)",
+          "Git und GitHub",
+          "Docker",
+          "CMake und Make",
+          "GoogleTest",
+          "Neovim",
+          "LaTeX"
+        ]
+      },
+      {
+        "title": "Lernfokus",
+        "items": [
+          "Algorithmen und Datenstrukturen",
+          "Komplexitätsanalyse (Big-O)",
+          "Mathematische Grundlagen"
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Schreiben Sie mir.",
+    "text": "Für Rückfragen, ein Kennenlernen oder ein Vorstellungsgespräch. Lebenslauf und Zeugnisse sende ich auf Anfrage.",
+    "copy_label": "E-Mail-Adresse kopieren",
+    "copied_label": "Kopiert"
+  }
+}
