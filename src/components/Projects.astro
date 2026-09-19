@@ -57,6 +57,7 @@ const { projects } = data;
       let frame = 0;
 
       row.addEventListener('pointermove', (e) => {
+        if (document.documentElement.classList.contains('lite')) return;
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
           const rect = row.getBoundingClientRect();

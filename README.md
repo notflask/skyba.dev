@@ -12,6 +12,7 @@ Astro, komplett statisch. Es gibt kein Frontend-Framework im Browser, nur ein pa
 - Technologie-Logos sind aus [Simple Icons](https://simpleicons.org), alle anderen Icons aus [Phosphor](https://phosphoricons.com). Welcher Begriff welches Icon bekommt, steht in `src/components/TechIcon.astro`.
 - Schwarz-weiß, mit hellem und dunklem Modus. Eine Akzentfarbe gibt es absichtlich nicht.
 - Keine Cookies, kein Tracking. Gehostet wird auf Vercel.
+- Auf schwachen Geräten (gemessen an der Bildrate, auch im Stromsparmodus) schaltet die Seite Blur, Neigung und Glas-Effekt von selbst ab.
 
 ## Lokal starten
 

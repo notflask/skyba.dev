@@ -468,7 +468,8 @@
 }
 
 .project-name a:focus-visible { outline: none; }
-.project:focus-within .project-card { background: var(--surface); box-shadow: 0 0 0 2px var(--ink); }
+/* keyboard focus only: a mouse click must not leave the card highlighted */
+.project:has(:focus-visible) .project-card { background: var(--surface); box-shadow: 0 0 0 2px var(--ink); }
 
 .project-arrow {
   transition: transform 0.5s var(--ease-out), opacity 0.4s;
@@ -550,11 +551,30 @@
   .project:hover .project-desc { transform: translateZ(10px); }
   .project:hover .project-stack { transform: translateZ(18px); }
 
-  .projects-list:has(.project:hover) .project:not(:hover) .project-card,
-  .projects-list:has(.project:focus-within) .project:not(:focus-within) .project-card {
+  .projects-list:has(.project:hover) .project:not(:hover) .project-card {
     filter: blur(3px);
     opacity: 0.4;
   }
+}
+
+/* Lite mode: set by a small frame-rate probe on weak devices or Low Power Mode.
+   No blur, no tilt, no glass, no grain; cards still lift onto a surface. */
+.lite .grain { display: none; }
+.lite .island {
+  background: var(--bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.lite .project:hover .project-card {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--line-strong), var(--shadow);
+}
+.lite .project:hover .project-head,
+.lite .project:hover .project-desc,
+.lite .project:hover .project-stack { transform: none; }
+.lite .projects-list:has(.project:hover) .project:not(:hover) .project-card {
+  filter: none;
+  opacity: 0.55;
 }
 
 /* -------------------------------------------------------- certificates */

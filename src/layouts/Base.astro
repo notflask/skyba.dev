@@ -67,6 +67,23 @@ const { title, description, canonical, noindex } = Astro.props;
       } else {
         items.forEach((el) => el.classList.add('in'));
       }
+
+      // Adaptive quality: measure real frame times once after load. If the median frame
+      // takes longer than ~24ms (under ~42 fps, e.g. weak GPU or Low Power Mode), switch to lite mode.
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const deltas: number[] = [];
+          let last = 0;
+          const step = (now: number) => {
+            if (last && now - last < 200) deltas.push(now - last);
+            last = now;
+            if (deltas.length < 40) return requestAnimationFrame(step);
+            deltas.sort((a, b) => a - b);
+            if (deltas[Math.floor(deltas.length / 2)] > 24) document.documentElement.classList.add('lite');
+          };
+          requestAnimationFrame(step);
+        }, 600);
+      });
     </script>
   </body>
 </html>
