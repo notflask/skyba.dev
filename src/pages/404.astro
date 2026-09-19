@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Base
+  title="Seite nicht gefunden | Danilo Skyba"
+  description="Diese Seite gibt es auf skyba.dev nicht. Zurück zur Startseite."
+  noindex
+>
+  <section class="min-h-[100dvh] flex items-center pt-28 pb-16">
+    <div class="wrap">
+      <p class="eyebrow-label mb-6">Fehler 404</p>
+      <h1 class="hero-name" style="white-space: normal">Nicht <span class="signed">gefunden.<svg class="signed-line" viewBox="0 0 300 26" fill="none" aria-hidden="true"><path pathLength="1" d="M4 17C52 7 96 22 150 13C198 5 246 19 296 9"></path></svg></span></h1>
+      <p class="lead mt-12">Diese Adresse gibt es nicht oder nicht mehr.</p>
+      <a href="/" class="btn mt-10">
+        <span>Zur Startseite</span>
+        <span class="btn-chip"><Icon name="arrow-up-right" /></span>
+      </a>
+    </div>
+  </section>
+</Base>
