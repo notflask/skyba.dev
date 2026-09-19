@@ -48,7 +48,7 @@
       },
       {
         "label": "Sprachen",
-        "value": "Deutsch (B2, C1 nach der FSP), Englisch (B2-C1), Ukrainisch und Russisch (Muttersprache)"
+        "value": "Deutsch (B2, C1 nach der FSP), Englisch (B2-C1), Ukrainisch (Muttersprache), Russisch (C2)"
       },
       {
         "label": "Standort",
@@ -60,10 +60,10 @@
   },
   "about": {
     "heading": "Über mich",
-    "statement": "Ich möchte verstehen, wie Software auf Systemebene funktioniert.",
+    "statement": "Programmieren ist mein Traumberuf. Ich bin bereit, mit anzupacken.",
     "paragraphs": [
       "Mit neun habe ich meine ersten Skripte geschrieben, zuerst in Python, später in C und C++. Geblieben ist die Neugier auf das, was unter der Haube passiert: wie Speicher verwaltet wird, wie ein Socket Netzwerkpakete verarbeitet und wie man einen Server absichert.",
-      "Meine Projekte entstehen aus dieser Neugier: eine eigene Key-Value-Datenbank, ein HTTP-Server, Härtungsskripte für Linux. Was mir noch fehlt, ist die theoretische Tiefe, an der ich gerade selbst arbeite. In einem Dualen Studium möchte ich sie systematisch lernen und im Betrieb direkt anwenden."
+      "Meine Projekte zeigen, was ich praktisch kann: eine eigene Key-Value-Datenbank, ein HTTP-Server, Härtungsskripte für Linux. Die theoretische Tiefe baue ich gerade selbst auf. In einem Dualen Studium möchte ich sie systematisch lernen und im Betrieb direkt anwenden."
     ]
   },
   "projects": {
@@ -162,9 +162,11 @@
           "C++ (ab C++17)",
           "C",
           "Python",
+          "Java",
+          "TypeScript",
           "Bash"
         ],
-        "note": "Grundkenntnisse in Java und Rust"
+        "note": "Grundkenntnisse in Rust"
       },
       {
         "title": "Umgebung",
@@ -179,10 +181,20 @@
         ]
       },
       {
+        "title": "KI-Werkzeuge",
+        "items": [
+          "Claude",
+          "Codex",
+          "Antigravity",
+          "DeepSeek",
+          "OpenCode"
+        ]
+      },
+      {
         "title": "Lernfokus",
         "items": [
           "Algorithmen und Datenstrukturen",
-          "Komplexitätsanalyse (Big-O)",
+          "Komplexität (Big-O)",
           "Mathematische Grundlagen"
         ]
       }

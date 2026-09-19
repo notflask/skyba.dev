@@ -6,7 +6,9 @@ import {
   siArchlinux,
   siC,
   siCmake,
+  siClaude,
   siCplusplus,
+  siDeepseek,
   siDocker,
   siGit,
   siGnubash,
@@ -15,8 +17,10 @@ import {
   siLinux,
   siMake,
   siNeovim,
+  siOpencode,
   siPython,
   siRust,
+  siTypescript,
   siUbuntu,
   siVagrant,
 } from 'simple-icons';
@@ -25,6 +29,8 @@ import tree from '@phosphor-icons/core/assets/regular/tree-structure.svg?raw';
 import chart from '@phosphor-icons/core/assets/regular/chart-line-up.svg?raw';
 import sigma from '@phosphor-icons/core/assets/regular/sigma.svg?raw';
 import terminal from '@phosphor-icons/core/assets/regular/terminal-window.svg?raw';
+import coffee from '@phosphor-icons/core/assets/regular/coffee.svg?raw';
+import sparkle from '@phosphor-icons/core/assets/regular/sparkle.svg?raw';
 import checkSquare from '@phosphor-icons/core/assets/regular/check-square.svg?raw';
 
 interface Props {
@@ -54,6 +60,12 @@ const rules: Array<[RegExp, ReturnType<typeof brand> | ReturnType<typeof glyph>]
   [/bash/, brand(siGnubash)],
   [/rust/, brand(siRust)],
   [/javascript/, brand(siJavascript)],
+  [/typescript/, brand(siTypescript)],
+  [/^java$/, glyph(coffee)],
+  [/^claude$/, brand(siClaude)],
+  [/deepseek/, brand(siDeepseek)],
+  [/opencode/, brand(siOpencode)],
+  [/^codex$|antigravity/, glyph(sparkle)],
   [/linux/, brand(siLinux)],
   [/ubuntu/, brand(siUbuntu)],
   [/arch/, brand(siArchlinux)],
