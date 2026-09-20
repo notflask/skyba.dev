@@ -26,7 +26,6 @@ import {
 } from 'simple-icons';
 import plugs from '@phosphor-icons/core/assets/regular/plugs-connected.svg?raw';
 import tree from '@phosphor-icons/core/assets/regular/tree-structure.svg?raw';
-import chart from '@phosphor-icons/core/assets/regular/chart-line-up.svg?raw';
 import sigma from '@phosphor-icons/core/assets/regular/sigma.svg?raw';
 import terminal from '@phosphor-icons/core/assets/regular/terminal-window.svg?raw';
 import coffee from '@phosphor-icons/core/assets/regular/coffee.svg?raw';
@@ -48,7 +47,6 @@ const glyph = (svg: string) => ({ kind: 'glyph' as const, svg });
 const rules: Array<[RegExp, ReturnType<typeof brand> | ReturnType<typeof glyph>]> = [
   [/socket/, glyph(plugs)],
   [/algorithm/, glyph(tree)],
-  [/komplexit/, glyph(chart)],
   [/mathemat/, glyph(sigma)],
   [/googletest/, glyph(checkSquare)],
   [/pwntools/, glyph(terminal)],
