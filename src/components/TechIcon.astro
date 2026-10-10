@@ -17,12 +17,15 @@ import {
   siLinux,
   siMake,
   siNeovim,
+  siNixos,
   siOpencode,
   siPython,
+  siQt,
   siRust,
   siTypescript,
   siUbuntu,
   siVagrant,
+  siWgpu,
 } from 'simple-icons';
 import plugs from '@phosphor-icons/core/assets/regular/plugs-connected.svg?raw';
 import tree from '@phosphor-icons/core/assets/regular/tree-structure.svg?raw';
@@ -30,6 +33,7 @@ import sigma from '@phosphor-icons/core/assets/regular/sigma.svg?raw';
 import terminal from '@phosphor-icons/core/assets/regular/terminal-window.svg?raw';
 import coffee from '@phosphor-icons/core/assets/regular/coffee.svg?raw';
 import sparkle from '@phosphor-icons/core/assets/regular/sparkle.svg?raw';
+import filePdf from '@phosphor-icons/core/assets/regular/file-pdf.svg?raw';
 import checkSquare from '@phosphor-icons/core/assets/regular/check-square.svg?raw';
 
 interface Props {
@@ -50,6 +54,7 @@ const rules: Array<[RegExp, ReturnType<typeof brand> | ReturnType<typeof glyph>]
   [/mathemat/, glyph(sigma)],
   [/googletest/, glyph(checkSquare)],
   [/pwntools/, glyph(terminal)],
+  [/mupdf/, glyph(filePdf)],
   [/c\+\+/, brand(siCplusplus)],
   [/^c$/, brand(siC)],
   [/cmake/, brand(siCmake)],
@@ -73,6 +78,9 @@ const rules: Array<[RegExp, ReturnType<typeof brand> | ReturnType<typeof glyph>]
   [/latex/, brand(siLatex)],
   [/ansible/, brand(siAnsible)],
   [/vagrant/, brand(siVagrant)],
+  [/^wgpu$/, brand(siWgpu)],
+  [/^qt$/, brand(siQt)],
+  [/^nix(os)?$/, brand(siNixos)],
 ];
 
 const match = rules.find(([re]) => re.test(n))?.[1];

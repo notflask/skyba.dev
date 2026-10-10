@@ -26,6 +26,12 @@ const { projects } = data;
                 </a>
               </h3>
               <p class="project-kind">{item.kind}</p>
+              {item.built_with === 'Claude' && (
+                <p class="project-badge">
+                  <TechIcon name="Claude" />
+                  <span>{projects.built_with_label}</span>
+                </p>
+              )}
             </div>
             <p class="project-desc">{item.description}</p>
             <ul class="project-stack" aria-label="Technologien">
