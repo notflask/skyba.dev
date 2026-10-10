@@ -72,32 +72,6 @@
     "link_label": "Quellcode auf GitHub",
     "items": [
       {
-        "name": "mizu",
-        "kind": "PDF- und EPUB-Viewer in Rust",
-        "description": "Ein schlanker Dokument-Viewer fürs Lernen: flüssiges Scrollen und Zoomen über die GPU, ein Dunkelmodus für die Seite selbst, Vim-Tasten und Handschrift mit Stift, Radierer und Rückgängig, die direkt in der PDF gespeichert wird. Läuft unter Linux, Windows und macOS.",
-        "stack": [
-          "Rust",
-          "wgpu",
-          "MuPDF",
-          "Nix"
-        ],
-        "url": "https://github.com/notflask/mizu",
-        "built_with": "Claude"
-      },
-      {
-        "name": "gigabyte-control-center",
-        "kind": "Laptop-Steuerung für Linux",
-        "description": "Ersatz für Gigabytes Windows-Programm auf Clevo-basierten Laptops: Leistungsmodi, Tastaturbeleuchtung, Lüfterkurven und Ladegrenze. Ein Systemdienst spricht über die tuxedo-drivers mit der Firmware, dazu gibt es ein Tray-Icon mit Qt-Oberfläche, eine CLI und ein NixOS-Modul.",
-        "stack": [
-          "Python",
-          "Qt",
-          "Linux",
-          "Nix"
-        ],
-        "url": "https://github.com/notflask/gigabyte-control-center",
-        "built_with": "Claude"
-      },
-      {
         "name": "grapedb",
         "kind": "Key-Value-Datenbank in C++",
         "description": "Ein Lernprojekt, um Datenbank-Interna zu verstehen. Die Daten liegen in einem Append-only-Log, das automatisch kompaktiert wird. Nach einem Absturz stellt grapedb den Zustand wieder her, ein Index im Arbeitsspeicher beschleunigt Lookups, Mutexe machen den Zugriff thread-sicher.",
@@ -151,6 +125,32 @@
           "Make"
         ],
         "url": "https://github.com/notflask/pomodoro"
+      },
+      {
+        "name": "mizu",
+        "kind": "PDF- und EPUB-Viewer in Rust",
+        "description": "Ein schlanker Dokument-Viewer fürs Lernen: flüssiges Scrollen und Zoomen über die GPU, ein Dunkelmodus für die Seite selbst, Vim-Tasten und Handschrift mit Stift, Radierer und Rückgängig, die direkt in der PDF gespeichert wird. Läuft unter Linux, Windows und macOS.",
+        "stack": [
+          "Rust",
+          "wgpu",
+          "MuPDF",
+          "Nix"
+        ],
+        "url": "https://github.com/notflask/mizu",
+        "built_with": "Claude"
+      },
+      {
+        "name": "gigabyte-control-center",
+        "kind": "Laptop-Steuerung für Linux",
+        "description": "Ersatz für Gigabytes Windows-Programm auf Clevo-basierten Laptops: Leistungsmodi, Tastaturbeleuchtung, Lüfterkurven und Ladegrenze. Ein Systemdienst spricht über die tuxedo-drivers mit der Firmware, dazu gibt es ein Tray-Icon mit Qt-Oberfläche, eine CLI und ein NixOS-Modul.",
+        "stack": [
+          "Python",
+          "Qt",
+          "Linux",
+          "Nix"
+        ],
+        "url": "https://github.com/notflask/gigabyte-control-center",
+        "built_with": "Claude"
       }
     ],
     "built_with_label": "Mit Claude gebaut"
