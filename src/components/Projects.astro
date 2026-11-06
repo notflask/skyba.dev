@@ -44,7 +44,7 @@ const { projects } = data;
             </ul>
             <span class="project-glow" aria-hidden="true"></span>
             <!-- Whole card is clickable. Decorative twin of the title link, hidden from keyboard and screen readers. -->
-            <a class="project-hit" href={item.url} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"></a>
+            <a class="project-hit" href={item.url} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" aria-label={`${item.name} auf GitHub`}></a>
           </div>
         </article>
       ))}
