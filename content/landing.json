@@ -44,7 +44,7 @@
       },
       {
         "label": "Schwerpunkt",
-        "value": "Systemnahe Entwicklung in C++, C und Linux"
+        "value": "Systemnahe Entwicklung in C++, C und Linux; Einstieg in Machine Learning"
       },
       {
         "label": "Sprachen",
@@ -63,7 +63,7 @@
     "statement": "Programmieren ist mein Traumberuf. Ich bin bereit, mit anzupacken.",
     "paragraphs": [
       "Mit neun habe ich meine ersten Skripte geschrieben, zuerst in Python, später in C und C++. Geblieben ist die Neugier auf das, was unter der Haube passiert: wie Speicher verwaltet wird, wie ein Socket Netzwerkpakete verarbeitet und wie man einen Server absichert.",
-      "Meine Projekte zeigen, was ich praktisch kann: eine eigene Key-Value-Datenbank, ein HTTP-Server, Härtungsskripte für Linux. Die theoretische Tiefe baue ich gerade selbst auf. In einem Dualen Studium möchte ich sie systematisch lernen und im Betrieb direkt anwenden."
+      "Meine Projekte zeigen, was ich praktisch kann: eine eigene Key-Value-Datenbank, Härtungsskripte für Linux und erste Schritte im Machine Learning. Die theoretische Tiefe baue ich gerade selbst auf. In einem Dualen Studium möchte ich sie systematisch lernen und im Betrieb direkt anwenden."
     ]
   },
   "projects": {
@@ -81,18 +81,6 @@
           "GoogleTest"
         ],
         "url": "https://github.com/notflask/grapedb"
-      },
-      {
-        "name": "chizik",
-        "kind": "HTTP-Server-Bibliothek in C++",
-        "description": "Von Grund auf auf POSIX-Sockets gebaut, ohne externe Abhängigkeiten. Sie bietet Routing für GET und POST, Wildcard-Routen, eigene 404-Handler und statische Dateien mit automatischem Content-Type samt Schutz vor Path Traversal.",
-        "stack": [
-          "C++20",
-          "POSIX-Sockets",
-          "CMake",
-          "GoogleTest"
-        ],
-        "url": "https://github.com/notflask/chizik"
       },
       {
         "name": "server-hardening-lab",

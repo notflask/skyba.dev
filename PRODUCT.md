@@ -20,7 +20,7 @@ Persönliche Portfolio- und Bewerbungs-Website für Danilo Skyba (skyba.dev / no
 
 ## Positioning
 
-Ein außergewöhnlich ambitionierter Entwickler, der seit seinem 9. Lebensjahr programmiert. Ausgeprägte praktische Umsetzungsstärke in systemnaher Entwicklung (C/C++, Smart Pointers, HTTP-Server, Key-Value Store, Linux Server Hardening, CTFs) kombiniert mit Neugierde auf Algorithmen und 4 Sprachen (Deutsch, Englisch, Ukrainisch, Russisch).
+Ein außergewöhnlich ambitionierter Entwickler, der seit seinem 9. Lebensjahr programmiert. Ausgeprägte praktische Umsetzungsstärke in systemnaher Entwicklung (C/C++, Smart Pointers, Key-Value Store, Linux Server Hardening, CTFs) kombiniert mit Neugierde auf Algorithmen und 4 Sprachen (Deutsch, Englisch, Ukrainisch, Russisch).
 
 ## Operating Context
 
@@ -38,7 +38,7 @@ Strikt schwarz-weiß, ohne Akzentfarbe (Dark Mode invertiert). Der Name steht im
 
 ## Evidence on Hand
 
-- GitHub Repositories: grapedb (C++ Key-Value DB), chizik (C++ HTTP-Server), server-hardening-lab (Linux Security), beginners-quest (Google CTF 2024 Solver), pomodoro (C CLI Timer).
+- GitHub Repositories: grapedb (C++ Key-Value DB), server-hardening-lab (Linux Security), beginners-quest (Google CTF 2024 Solver), pomodoro (C CLI Timer).
 - Credly-Badges: PCEP Certified Entry-Level Python Programmer (Python Institute, 04/2023) und Introduction to Cybersecurity (Cisco Networking Academy, 11/2022).
 - Vielsprachigkeit: Deutsch, Englisch, Ukrainisch, Russisch.
 - Programmiererfahrung seit dem 9. Lebensjahr.
