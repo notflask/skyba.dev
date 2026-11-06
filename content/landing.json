@@ -32,7 +32,7 @@
     }
   ],
   "hero": {
-    "lead": "Ich programmiere seit meinem neunten Lebensjahr und suche ein Unternehmen für ein Duales Studium in der Informatik.",
+    "lead": "Ich programmiere seit meinem neunten Lebensjahr und suche ein Unternehmen für ein duales Studium in der Informatik.",
     "facts": [
       {
         "label": "Beginn",
@@ -52,7 +52,7 @@
       },
       {
         "label": "Standort",
-        "value": "Schleswig-Holstein"
+        "value": "Schleswig-Holstein, umzugsbereit"
       }
     ],
     "cta_primary": "Projekte ansehen",
