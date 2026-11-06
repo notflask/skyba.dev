@@ -127,6 +127,20 @@
         "url": "https://github.com/notflask/pomodoro"
       },
       {
+        "name": "energy-demand-predictor",
+        "kind": "Vorhersage des Strombedarfs in Python",
+        "description": "Ein Lernprojekt zur Prognose des Stromverbrauchs. Umgesetzt sind bisher: die Analyse historischer Stromverbrauchsdaten für Deutschland (Open Power System Data, 2015–2020) mit Pandas und NumPy, Diagramme der stündlichen und wöchentlichen Verläufe mit Matplotlib, eine einfache Baseline-Vorhersage und Unit-Tests mit pytest. Als Nächstes folgen Regressionsmodelle mit scikit-learn im Vergleich zur Baseline.",
+        "stack": [
+          "Python",
+          "Pandas",
+          "NumPy",
+          "Matplotlib",
+          "pytest"
+        ],
+        "url": "https://github.com/notflask/energy-demand-predictor",
+        "status": "in Arbeit"
+      },
+      {
         "name": "mizu",
         "kind": "PDF- und EPUB-Viewer in Rust",
         "description": "Ein schlanker Dokument-Viewer fürs Lernen: flüssiges Scrollen und Zoomen über die GPU, ein Dunkelmodus für die Seite selbst, Vim-Tasten und Handschrift mit Stift, Radierer und Rückgängig, die direkt in der PDF gespeichert wird. Läuft unter Linux, Windows und macOS.",

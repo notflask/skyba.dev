@@ -18,6 +18,9 @@ import {
   siMake,
   siNeovim,
   siNixos,
+  siNumpy,
+  siPandas,
+  siPytest,
   siOpencode,
   siPython,
   siQt,
@@ -35,6 +38,7 @@ import coffee from '@phosphor-icons/core/assets/regular/coffee.svg?raw';
 import sparkle from '@phosphor-icons/core/assets/regular/sparkle.svg?raw';
 import filePdf from '@phosphor-icons/core/assets/regular/file-pdf.svg?raw';
 import checkSquare from '@phosphor-icons/core/assets/regular/check-square.svg?raw';
+import chartLine from '@phosphor-icons/core/assets/regular/chart-line.svg?raw';
 
 interface Props {
   name: string;
@@ -55,6 +59,10 @@ const rules: Array<[RegExp, ReturnType<typeof brand> | ReturnType<typeof glyph>]
   [/googletest/, glyph(checkSquare)],
   [/pwntools/, glyph(terminal)],
   [/mupdf/, glyph(filePdf)],
+  [/matplotlib/, glyph(chartLine)],
+  [/^pytest$/, brand(siPytest)],
+  [/^pandas$/, brand(siPandas)],
+  [/^numpy$/, brand(siNumpy)],
   [/c\+\+/, brand(siCplusplus)],
   [/^c$/, brand(siC)],
   [/cmake/, brand(siCmake)],

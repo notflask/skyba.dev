@@ -26,6 +26,12 @@ const { projects } = data;
                 </a>
               </h3>
               <p class="project-kind">{item.kind}</p>
+              {item.status && (
+                <p class="project-badge">
+                  <Icon name="wrench" class="tech-icon" />
+                  <span>{item.status}</span>
+                </p>
+              )}
               {item.built_with === 'Claude' && (
                 <p class="project-badge">
                   <TechIcon name="Claude" />
